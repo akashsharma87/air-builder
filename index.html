@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Air Builder</title>
+    <meta name="description" content="Build Lego-style bricks and draw diagrams in the air with hand gestures, using only your webcam." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='5' y='11' width='22' height='16' rx='2' fill='%2300e5ff'/%3E%3Crect x='9' y='6' width='5' height='5' rx='1' fill='%2300e5ff'/%3E%3Crect x='18' y='6' width='5' height='5' rx='1' fill='%2300e5ff'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "@mediapipe/tasks-vision": "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.18/vision_bundle.mjs"
+        }
+      }
+    </script>
+  </head>
+  <body class="mode-build preview skeleton">
+    <div id="stage">
+      <canvas id="world" aria-label="3D brick world"></canvas>
+      <canvas id="board" aria-label="Drawing board"></canvas>
+    </div>
+    <canvas id="overlay" aria-hidden="true"></canvas>
+    <video id="camera" playsinline muted></video>
+
+    <header class="hud ui">
+      <div class="brand"><span class="dot"></span>AIR BUILDER</div>
+      <div id="status" class="chip" role="status">Ready</div>
+    </header>
+
+    <nav id="toolbar" class="toolbar ui" aria-label="Tools">
+      <button type="button" class="tool" data-mode="build">Build</button>
+      <button type="button" class="tool" data-mode="draw">Draw</button>
+      <span class="sep"></span>
+      <button type="button" class="swatch" data-color="#00e5ff" style="--c: #00e5ff" aria-label="Cyan"></button>
+      <button type="button" class="swatch" data-color="#ff3df2" style="--c: #ff3df2" aria-label="Pink"></button>
+      <button type="button" class="swatch" data-color="#ffb300" style="--c: #ffb300" aria-label="Amber"></button>
+      <button type="button" class="swatch" data-color="#7cff6b" style="--c: #7cff6b" aria-label="Green"></button>
+      <button type="button" class="swatch" data-color="#ff4d5e" style="--c: #ff4d5e" aria-label="Red"></button>
+      <button type="button" class="swatch" data-color="#f2f5ff" style="--c: #f2f5ff" aria-label="White"></button>
+      <span class="sep"></span>
+      <button type="button" class="tool" data-action="ar" title="Show your real camera behind the holograms">AR</button>
+      <button type="button" class="tool hot only-build" data-action="smash" title="Blow up the build">Smash</button>
+      <button type="button" class="tool hot only-draw" data-action="make3d" title="Turn your drawing into Lego">Make 3D</button>
+      <button type="button" class="tool" data-action="undo">Undo</button>
+      <button type="button" class="tool" data-action="clear">Clear</button>
+    </nav>
+
+    <div id="bin" class="bin" aria-hidden="true">Drop to delete</div>
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <footer id="hints" class="hints ui"></footer>
+
+    <div id="start" class="start">
+      <div class="card">
+        <h1>Build with your hands</h1>
+        <p>Stack Lego-style bricks and sketch diagrams in the air. Everything runs in this browser: the video never leaves your computer.</p>
+        <button id="startBtn" type="button">Start camera</button>
+        <button id="mouseBtn" type="button" class="ghost">No camera? Use the mouse</button>
+        <p id="startMsg" class="msg" role="alert"></p>
+        <p class="keys">Keys: <kbd>B</kbd> build · <kbd>D</kbd> draw · <kbd>Z</kbd> undo · <kbd>A</kbd> AR · <kbd>X</kbd> smash · <kbd>T</kbd> make 3D · <kbd>C</kbd> camera preview · <kbd>H</kbd> hand lines · <kbd>U</kbd> hide UI · <kbd>F</kbd> fullscreen</p>
+      </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
