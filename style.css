@@ -27,6 +27,7 @@ body {
 #stage,
 #world,
 #board,
+#music,
 #overlay {
   position: fixed;
   inset: 0;
@@ -51,8 +52,21 @@ body {
 body.mode-draw #board {
   display: block;
 }
-body.mode-draw #world {
+body.mode-draw #world,
+body.mode-music #world {
   visibility: hidden;
+}
+
+/* Music mode: a dark stage the playhead sweeps across */
+#music {
+  display: none;
+  background: radial-gradient(80% 70% at 50% 45%, #11182a, #070a12);
+}
+body.mode-music #music {
+  display: block;
+}
+body.ar.has-camera #music {
+  background: transparent;
 }
 
 #camera {
@@ -363,8 +377,9 @@ kbd {
 }
 
 /* Mode-specific buttons */
-body.mode-draw .only-build,
-body.mode-build .only-draw {
+body:not(.mode-build) .only-build,
+body:not(.mode-draw) .only-draw,
+body:not(.mode-music) .only-music {
   display: none;
 }
 .tool.hot {
@@ -417,4 +432,13 @@ body.ar.has-camera #board {
     height: 96px;
     bottom: 110px;
   }
+}
+
+/* Music mode on camera: you, clear and bright, with the strokes floating on top (like the reel). */
+body.mode-music.ar.has-camera #camera {
+  opacity: 1;
+  filter: saturate(0.95) brightness(0.92);
+}
+body.mode-music.ar.has-camera #music {
+  background: radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.45));
 }

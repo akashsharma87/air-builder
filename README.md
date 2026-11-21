@@ -1,6 +1,6 @@
 # Air Builder
 
-Build with Lego-style bricks and sketch diagrams **in the air**, using only your hand and a laptop webcam. No mouse, no keyboard, no install.
+Build with Lego-style bricks, sketch diagrams and **draw music** **in the air**, using only your hand and a laptop webcam. No mouse, no keyboard, no install.
 
 <!-- Add a demo GIF here: record 5–8 seconds of the screen, save as demo.gif in this folder, then:
 ![Demo](demo.gif)
@@ -10,27 +10,26 @@ Build with Lego-style bricks and sketch diagrams **in the air**, using only your
 
 ### On a Mac
 
-**Easiest (no Terminal):**
-1. On GitHub, click the green **Code** button → **Download ZIP**, and unzip it.
-2. Open the folder and double-click **`start-mac.command`**. (First time only: if macOS blocks it, right-click → **Open** → **Open**.)
-3. The app opens at **http://localhost:8000**. Click **Start camera** and allow it.
-
-**With Terminal** (copy-paste these 3 lines):
+**First time: one line.** Open **Terminal** (Cmd+Space, type *Terminal*, Enter), paste this and press Enter:
 
 ```bash
-git clone https://github.com/akashsharma87/air-builder.git
-cd air-builder
-sh start-mac.command
+git clone https://github.com/akashsharma87/air-builder.git ~/air-builder && sh ~/air-builder/start-mac.command
 ```
 
-This repo is private, so the first clone asks for your GitHub login. Use your username, and for the password a [personal access token](https://github.com/settings/tokens) (GitHub no longer accepts account passwords here). Or skip that by installing GitHub CLI once (`brew install gh`, then `gh auth login`) and cloning with `gh repo clone akashsharma87/air-builder`.
-
-**Get the latest version later:**
+**Every time after: one line** (it also downloads the latest version by itself):
 
 ```bash
-cd air-builder
-git pull
+sh ~/air-builder/start-mac.command
 ```
+
+…or skip Terminal: open your home folder → **air-builder** → double-click **`start-mac.command`**. (First time only: if macOS blocks it, right-click → **Open** → **Open**.)
+
+The app opens in your browser (Safari or Chrome). Click **Start camera & make music** and allow the camera. Turn the volume up.
+
+Notes:
+- If macOS asks to install *command line developer tools* the first time, click **Install**, wait, then paste the line again.
+- This repo is private, so the first download asks for your GitHub login: your username, and as the password a [personal access token](https://github.com/settings/tokens) (GitHub no longer accepts account passwords here).
+- **No Terminal at all:** on GitHub click the green **Code** button → **Download ZIP**, unzip it and double-click **`start-mac.command`** inside (this version doesn't auto-update).
 
 ### On Windows
 
@@ -38,7 +37,7 @@ Double-click **`start-windows.bat`**, then open **http://localhost:8000**.
 
 To stop it on either system, close the Terminal / command window.
 
-## Two modes
+## Three modes
 
 ### Build: stack bricks
 | Gesture | What it does |
@@ -58,6 +57,25 @@ To stop it on either system, close the Terminal / command window.
 | 🤏 **Pinch a shape** | Move it. Drop it on the red bin to delete it |
 | ✊ **Fist on a shape** (half a second) | Erase it |
 
+### Music: draw lines, a playhead plays them
+A glowing pink playhead sweeps left → right over a 2-bar loop. Wherever it crosses something you drew, it plays a note.
+
+| Gesture | What it does |
+|---|---|
+| 🤏 **Pinch + move** | Draw a melody line. **Higher on screen = higher note** (C minor pentatonic, so any shape sounds good) |
+| 🤏 **Quick pinch tap** | Drop a drum ring: low = kick, middle = snare, high = hi-hat |
+| ✊ **Fist on a line** (half a second) | Erase it |
+
+- **Colour = instrument**: green glass keys, cyan bell, pink pluck, amber bass, red lead, white pad.
+- Flat lines hold one long note; steep lines strum several notes; a wavy line becomes a tune.
+- **The shape is the music.** Every special point of a drawing gets its own sound and a burst of light when the playhead hits it:
+  - ✦ **Peak** (top of an arch): a sparkling bell arpeggio climbing up. Sharper peak = longer run.
+  - ▼ **Valley** (bottom of a U or V): a deep 808 bass drop. A sharp V punches, a round U booms longer.
+  - ◆ **Corner** (sharp bend, zigzag, staircase): a strummed chord stab. A left turn strums up, a right turn strums down; sharper = brighter.
+  - ✸ **Crossing** (two lines cross, or a loop crosses itself): a shimmering crash with two chimes.
+  - The exact phrase / chord is picked from where the point sits, so no two points sound the same.
+- Toolbar: **Play / Pause**, **Beat** (soft backing drums once something is drawn), **Tempo** (80 / 100 / 120 BPM).
+
 ### The wow buttons
 - **AR**: your real webcam video fills the screen and the bricks, drawings and hand lines float on top of it, lined up with your real hand. Turns on automatically when you start the camera.
 - **Make 3D** (Draw mode): your drawing stands up as a Lego build, exactly as drawn. Bricks rain down and bounce into place, bottom row first.
@@ -68,7 +86,7 @@ Point at a button and **pinch** to press it: switch Build / Draw, pick a colour,
 
 **No camera?** Click *Use the mouse*. Build: click to place, right-click to break, drag to rotate, scroll to zoom. Draw: drag to draw, drag a shape to move it, right-click to delete.
 
-**Keys:** `B` build · `D` draw · `Z` undo · `A` AR · `T` make 3D · `X` smash · `C` camera preview · `H` hand lines · `U` hide the UI (for clean screen recordings) · `M` sound on/off · `F` fullscreen.
+**Keys:** `B` build · `D` draw · `N` music · `Space` play/pause · `Z` undo · `A` AR · `T` make 3D · `X` smash · `C` camera preview · `H` hand lines · `U` hide the UI (for clean screen recordings) · `M` sound on/off · `F` fullscreen.
 
 ## How it works
 
@@ -87,6 +105,7 @@ gestures.js   pose, pinch, smoothing (pure maths)
 recognize.js  stroke → rectangle / circle / triangle / arrow (pure maths)
 build.js      3D brick world
 draw.js       diagram board
+music.js      music board: playhead, synths, drums
 ```
 
 ## Run it on your computer (Mac or Windows)
