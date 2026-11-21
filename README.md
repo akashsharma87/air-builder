@@ -24,7 +24,7 @@ sh ~/air-builder/start-mac.command
 
 …or skip Terminal: open your home folder → **air-builder** → double-click **`start-mac.command`**. (First time only: if macOS blocks it, right-click → **Open** → **Open**.)
 
-The app opens in your browser (Safari or Chrome). Click **Start camera & make music** and allow the camera. Turn the volume up.
+The app opens in Google Chrome (or your default browser if Chrome isn't installed). Click **Start camera & make music** and allow the camera. Turn the volume up.
 
 Notes:
 - If macOS asks to install *command line developer tools* the first time, click **Install**, wait, then paste the line again.

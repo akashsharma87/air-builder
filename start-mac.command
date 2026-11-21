@@ -18,7 +18,8 @@ echo ""
 echo "  Air Builder is running at $URL"
 echo "  Keep this window open while you use it. Press Ctrl+C to stop."
 echo ""
-(sleep 1 && open "$URL") &
+# Open in Google Chrome if it's installed, otherwise the default browser.
+(sleep 1 && (open -a "Google Chrome" "$URL" 2>/dev/null || open "$URL")) &
 
 if command -v python3 >/dev/null 2>&1; then
   python3 -m http.server "$PORT" --bind 127.0.0.1
